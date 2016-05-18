@@ -31,8 +31,6 @@ public class RegistrationService {
 		System.out.println("get all users");
 		List<Person> persons=Cache.get();
 		String result=JSONConverter.toJSON(persons);
-		/*Gson gson=new GsonBuilder().create();
-		String result=gson.toJson(persons);*/
 		System.out.println(result);
 		return result;
 	}

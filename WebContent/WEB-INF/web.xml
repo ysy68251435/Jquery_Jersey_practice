@@ -9,9 +9,13 @@
         <param-name>com.sun.jersey.config.property.packages</param-name>
         <param-value>com.siyang.registration</param-value>
     </init-param>
+    <init-param>
+    	<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+    	<param-value>com.siyang.corsfilter.CorsFilter</param-value>
+    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
-  	
+
   	<servlet>
   		<servlet-name>phase2</servlet-name>
   		<jsp-file>/html/phase2.html</jsp-file>

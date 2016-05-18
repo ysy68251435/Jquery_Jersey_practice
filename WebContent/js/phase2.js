@@ -1,7 +1,4 @@
 
-/*var data=[{"wechat":"001","name":"name001","birth":"04/01/1988"},
-		  {"wechat":"002","name":"name002","birth":"04/01/1988"},
-		  {"wechat":"003","name":"name003","birth":"04/01/1988"}];*/
 
 var allusers=[];
 

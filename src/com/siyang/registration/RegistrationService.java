@@ -10,11 +10,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.siyang.solr.SolrController;
 
 @Path("/")
 public class RegistrationService {
+	
+	private SolrController solr;
+	
+	public RegistrationService(){
+		solr=new SolrController();
+	}
 	
 	@Path("test")
 	@GET
@@ -41,7 +46,9 @@ public class RegistrationService {
 	public String addNewUser(String input){
 		System.out.println("add new users");
 		System.out.println("input: "+input);
-		Cache.store(JSONConverter.fromJSON(input));
+		List<Person> persons=JSONConverter.fromJSON(input);
+		solr.addDocument(persons);// add documents to solr
+		Cache.store(persons);
 		Cache.display();
 		Result r=new Result(200);
 		return JSONConverter.toJSON(r);
@@ -53,7 +60,9 @@ public class RegistrationService {
 	public String updateCache(String input){
 		System.out.println("update cache");
 		System.out.println("input: "+input);
-		Cache.update(JSONConverter.fromJSON(input));
+		List<Person> persons=JSONConverter.fromJSON(input);
+		solr.addDocument(persons);
+		Cache.update(persons);
 		Cache.display();
 		Result r=new Result(200);
 		return JSONConverter.toJSON(r);

@@ -1,6 +1,9 @@
 
+/*var data=[{"wechat":"001","name":"name001","birth":"04/01/1988"},
+		  {"wechat":"002","name":"name002","birth":"04/01/1988"},
+		  {"wechat":"003","name":"name003","birth":"04/01/1988"}];*/
 
-var allusers=[];
+//var allusers=[];
 
 function Delete(){
 	console.log("remove the row");
@@ -36,11 +39,12 @@ function Edit(){
 
 	wechat.html("<input type='text' value='"+wechat.html()+"'/>"); 
 	name.html("<input type='text' value='"+name.html()+"'/>"); 
-	birth.html("<input type='text' value='"+birth.html()+"'/>"); 
+	birth.html("<label class='birthLabel'><input type='text' value='"+birth.html()+"'/></label>"); 
 	buttons.html("<button class='btnSave'>save</button><button class='btnDelete'>delete</button>"); 
 
 	$(".btnSave").bind("click", Save); 
 	$(".btnDelete").bind("click", Delete_ShowTable);
+	$(".birthLabel input").datepicker();
 }
 
 var convertEditableTableToJson=function(tableId){
@@ -94,7 +98,7 @@ $(document).on('click','#btnShow', function(){
 		success: function(msg){
 			console.log("success");
 			console.log(msg);
-			allusers=msg;
+			var allusers=msg;
 			console.log(allusers);
 			for(var index in allusers){
 				var values=[];
@@ -152,6 +156,7 @@ $(document).on('click', '.send', function(){
         success: function(msg) {
             console.log("success");
             console.log(msg);
+            alert("submit success");
         },
         error: function(err) {
         	console.log("error");
@@ -175,6 +180,7 @@ $(document).on('click','.update',function(){
 		success: function(msg){
 			console.log("success");
 			console.log(msg);
+			alert("update success");
 		},
 		error: function(err){
 			console.log("error");
@@ -183,6 +189,56 @@ $(document).on('click','.update',function(){
 	});
 });
 
+
+$(document).on('click','.search',function(e){
+	console.log("search");
+	var input=$('.searchForm').serialize();
+	console.log(input);
+	$("#p2").empty();
+	$("#tbl2").empty();
+	$.ajax({
+		type: 'GET',
+		url: 'http://localhost:8080/registration/service/search/core2',
+		data: input,
+		dataType: 'json',
+		cache:true,
+		success: function(msg){
+			console.log("success");
+			console.log(msg);
+			if(msg["response"]["numFound"]==0){
+				$("#p2").append(
+					"<h4>\""+"No Results"+"\"</h4>"
+				);
+			}else{
+				var allusers=msg["response"]["docs"];
+				console.log(allusers);
+				$("#p2").append(
+					"<h4>Found Results: "+msg["response"]["numFound"]+"</h4>"
+				);
+				for(var index in allusers){
+					var values=[];
+					for(var key in allusers[index]){
+						var value=allusers[index][key];
+						values.push(value);
+					}
+					$("#tbl2").append(
+						"<tr>"+
+						"<td>"+values[0]+"</td>"+
+						"<td>"+values[1]+"</td>"+
+						"<td>"+values[2]+"</td>"+
+						"</tr>"
+					);
+				}
+			}
+		},
+		error: function(err){
+			console.log("error");
+			console.log(err);
+		}
+	});
+
+	e.preventDefault();
+});
 
 
 

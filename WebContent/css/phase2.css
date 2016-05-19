@@ -1,9 +1,11 @@
-@charset "utf-8";
-
 h1{
 	font-size:40px;
 	margin-top:50px;
 	margin-left:30px;
+}
+
+h3{
+	font-size:30px;
 }
 
 ul{
@@ -18,17 +20,26 @@ ul{
 .div2{
 	/*border-style: solid;*/
 	float: left;
-	width: 600px;
+	width: 590px;
 }
 
 .div3{
 	/*border-style: solid;*/
+	width: 590px;
 	float: left;
 }
 
 .div4{
 	float:left;
-	width:700px;
+	width:590px;
+	/*border-style: solid;*/
+}
+
+.div5{
+	text-align: center;
+	float:left;
+	width:530px;
+	/*border-style: solid;*/
 }
 
 #btnAdd{
@@ -69,6 +80,7 @@ ul{
 	border-radius: 5px;
 	color: white;
 	font-weight: bold;
+	float:right;
 }
 
 .update{
@@ -79,15 +91,38 @@ ul{
 	border-radius: 5px;
 	color: white;
 	font-weight: bold;
+	float:right;
 }
-table{
+
+.searchBar{
+	width:400px;
+	border-radius: 5px;
+	height: 25px;
+}
+#tbl2 td{
+	border: 1px solid black;
+	width:120px;
+}
+
+#tbl, #tbl1{
 	/*border:1px solid black;*/
 	table-layout: fixed;
 	width:560px;
 }
-tr, td{
+
+#tbl tr,  #tbl td{
 	border: 1px solid black;
 	width: 140px;
+}
+
+#tbl1 tr,  #tbl1 td{
+	border: 1px solid black;
+	width: 140px;
+}
+
+#tbl2 tr, #tbl2 td{
+	border: 1px solid black;
+	width: 160px;
 }
 
 form{

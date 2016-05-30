@@ -7,15 +7,18 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.common.SolrInputDocument;
+import org.springframework.stereotype.Component;
 
 import com.siyang.registration.Person;;
 
+@Component
 public class SolrController {
 	
 	private final String url="http://localhost:8983/solr/core2";
 	private SolrClient client;
 	
 	public SolrController(){
+		System.out.println("connect to solr");
 		client=new HttpSolrClient(url);
 	}
 	
@@ -37,23 +40,31 @@ public class SolrController {
 		}
 	}
 	
-	public static String getQuery(String input){
+	public String getQuery(String input){
 		StringBuilder sb=new StringBuilder();
+		input=input.toLowerCase();
 		String[] strs=input.split(" ");
-		for(String s:strs){
-			if(isBirthDate(s)){
-				sb.append("birth:"+s+" OR ");
+		for(int i=0;i<strs.length;i++){
+			if(isBirthDate(strs[i])){
+				sb.append("birth:"+strs[i]+" ");
 				continue;
 			}
-			sb.append("wechatid:"+s+" OR ");
-			sb.append("name:"+s+" OR ");
+			if(i>0&&strs[i-1].equals("wechatid")){
+				sb.append("wechatid:"+strs[i]+" ");
+				continue;
+			}
+			if(i>0&&strs[i-1].equals("name")){
+				sb.append("name:"+strs[i]+" ");
+				continue;
+			}
+			sb.append(strs[i]+" ");
 		}
 		String result=sb.toString();
 		System.out.println("query: "+result);
-		return result.length()==0?"":result.substring(0, result.length()-4);
+		return result;
 	}
 	
-	private static boolean isBirthDate(String s){
+	private boolean isBirthDate(String s){
 		return s.length()==10&&s.charAt(2)=='/'&&s.charAt(5)=='/';
 	}
 }
